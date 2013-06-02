@@ -10,8 +10,12 @@ import com.burnhamup.maze.Position;
 
 public class Mate extends Piece {
 
-	public Mate(Position p, Color c) {
-		super(p, c);
+//	public Mate(Position p, Color c) {
+//		super(p, c);
+//	}
+	
+	public Mate(Color c) {
+		super(c);
 	}
 
 	@Override
@@ -51,10 +55,5 @@ public class Mate extends Piece {
 		return list;
 	}
 
-	@Override
-	public void movePiece(Position p) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

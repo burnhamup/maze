@@ -8,14 +8,36 @@ import com.burnhamup.maze.Position;
 
 public abstract class Piece {
 	
+	public Position getPosition() {
+		return position;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public boolean isDead() {
+		return isDead;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
 	protected Position position;
 	protected Color color;
 	protected boolean isDead;
 	
-	public Piece(Position p, Color c) {
-		position = p;
+//	public Piece(Position p, Color c) {
+//		position = p;
+//		color = c;
+//		isDead =false;
+//	}
+	
+	public Piece(Color c) {
+		position = null;
 		color = c;
-		isDead =false;
+		isDead = false;
 	}
 	
 	/**
@@ -28,10 +50,25 @@ public abstract class Piece {
 	 * Moves this piece to the new position
 	 * @param p
 	 */
-	public abstract void movePiece(Position p);
+	public void movePiece(Position p) {
+		this.position = p;
+	}
 	
 	public void kill() {
 		isDead = true;
+	}
+	
+	@Override 
+	public boolean equals(Object obj) {
+		if (obj.getClass() == this.getClass()) {
+			Piece other = (Piece) obj;
+			if (other.position.equals(this.position) &&
+					other.color == this.color &&
+					other.isDead == this.isDead) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	

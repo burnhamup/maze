@@ -40,4 +40,36 @@ public class Space {
 		this.occupyingPiece = occupyingPiece;
 	}
 
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Space))
+			return false;
+		Space other = (Space) obj;
+		if (color != other.color)
+			return false;
+		if (isDesert != other.isDesert)
+			return false;
+		if (occupyingPiece == null) {
+			if (other.occupyingPiece != null)
+				return false;
+		} else if (!occupyingPiece.equals(other.occupyingPiece))
+			return false;
+		if (position == null) {
+			if (other.position != null)
+				return false;
+		} else if (!position.equals(other.position))
+			return false;
+		return true;
+	}
+	
+
+
 }
