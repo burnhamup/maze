@@ -57,19 +57,32 @@ public abstract class Piece {
 	public void kill() {
 		isDead = true;
 	}
-	
-	@Override 
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
 	public boolean equals(Object obj) {
-		if (obj.getClass() == this.getClass()) {
-			Piece other = (Piece) obj;
-			if (other.position.equals(this.position) &&
-					other.color == this.color &&
-					other.isDead == this.isDead) {
-				return true;
-			}
-		}
-		return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Piece other = (Piece) obj;
+		if (color != other.color)
+			return false;
+		if (isDead != other.isDead)
+			return false;
+		if (position == null) {
+			if (other.position != null)
+				return false;
+		} else if (!position.equals(other.position))
+			return false;
+		return true;
 	}
+	
 	
 	
 }

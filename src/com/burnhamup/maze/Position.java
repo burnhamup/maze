@@ -12,6 +12,12 @@ public class Position implements Cloneable {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
 		if (obj.getClass() == this.getClass()) {
 			Position other = (Position) obj;
 			if (other.row == this.row && other.col == this.col) {

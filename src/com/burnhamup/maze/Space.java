@@ -15,27 +15,35 @@ public class Space {
 		this.isDesert = isDesert;
 		this.color = color;
 	}
+	
 	public Color getColor() {
 		return color;
 	}
+	
 	public void setColor(Color color) {
 		this.color = color;
 	}
+	
 	public boolean isDesert() {
 		return isDesert;
 	}
+	
 	public void setDesert(boolean isDesert) {
 		this.isDesert = isDesert;
 	}
+	
 	public Position getPosition() {
 		return position;
 	}
+	
 	public void setPosition(Position position) {
 		this.position = position;
 	}
+	
 	public Piece getOccupyingPiece() {
 		return occupyingPiece;
 	}
+	
 	public void setOccupyingPiece(Piece occupyingPiece) {
 		this.occupyingPiece = occupyingPiece;
 	}
