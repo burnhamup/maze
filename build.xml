@@ -1,0 +1,43 @@
+<project>
+  <property name="src_dir" location="src" />
+  <property name="test_dir" location="test" />
+  <property name="build_dir" location="build" />
+  <property name="src_build" location="build/class" />
+  <property name="test_build" location="build/test-class" />
+  <property name="junit" location="/usr/share/java/junit4.jar" />
+
+  <target name="clean">
+    <delete dir="${build_dir}" />
+  </target>
+
+  <target name="build">
+    <mkdir dir="${src_build}" />
+    <javac includeantruntime="false" srcdir="${src_dir}" destdir="${src_build}" />
+  </target>
+
+  <target name="build-test" depends="build">
+    <mkdir dir="${test_build}" />
+    <javac includeantruntime="false" srcdir="${test_dir}" destdir="${test_build}">
+      <classpath>
+	<pathelement location="${src_build}" />
+	<pathelement location="${junit}" />
+      </classpath>
+    </javac>
+  </target>
+    
+  <target name="test" depends="build-test">
+    <junit haltonfailure="true">
+      <formatter type="brief" usefile="false" />
+      <formatter type="plain" />
+      <classpath>
+	<pathelement location="${test_build}" />
+	<pathelement location="${src_build}"/>
+	<pathelement location="${junit}" />
+      </classpath>
+      <batchtest fork="no" todir="report">
+	<fileset dir="${test_dir}" includes="**/*Test.java"/>
+      </batchtest>
+    </junit>
+  </target>
+  
+</project>
