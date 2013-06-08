@@ -27,6 +27,14 @@ public class Position implements Cloneable {
 		return false; 
 	}
 
+        @Override
+        public int hashCode() {
+            int result = 448;
+            result*= row;
+            result+= col;
+            return result;
+        }
+
 	@Override
 	public String toString() {
 		return "Position [row=" + row + ", col=" + col + "]";
@@ -35,8 +43,4 @@ public class Position implements Cloneable {
 	public Position clone() {
 		return new Position(row,col);
 	}
-	
-
-	
-	
 }

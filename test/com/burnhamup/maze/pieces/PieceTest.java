@@ -2,7 +2,7 @@ package com.burnhamup.maze.pieces;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class PieceTest {
 		}
 
 		@Override
-		public List<Position> getValidMoves(Board board) {
+		public Set<Position> getValidMoves(Board board) {
 			// TODO Auto-generated method stub
 			return null;
 		}

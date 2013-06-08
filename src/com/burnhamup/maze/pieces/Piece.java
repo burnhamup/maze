@@ -1,6 +1,6 @@
 package com.burnhamup.maze.pieces;
 
-import java.util.List;
+import java.util.Set;
 
 import com.burnhamup.maze.Board;
 import com.burnhamup.maze.Color;
@@ -44,7 +44,7 @@ public abstract class Piece {
 	 * Returns a list of moves that this piece can move to. 
 	 * @return
 	 */
-	public abstract List<Position> getValidMoves(Board board);
+	public abstract Set<Position> getValidMoves(Board board);
 	
 	/**
 	 * Moves this piece to the new position
@@ -82,6 +82,22 @@ public abstract class Piece {
 			return false;
 		return true;
 	}
+
+        @Override
+        public int hashCode() {
+            int result = 1;
+            //Color
+            if (color == Color.WHITE) {
+                result+=1;
+            }
+            if (isDead) {
+                result+=1;
+            }
+            if (position != null) {
+                result *= position.hashCode();
+            }
+            return result;
+        }
 	
 	
 	

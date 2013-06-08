@@ -58,6 +58,20 @@ public class BoardTest {
 		board.board[0][0] = new Space(new Position(0,0), Color.BLACK, false);
 		assertTrue(board.isValidPosition(new Position(0,0)));
 	}
+
+	@Test
+	public void testIsValidPositionNegative() {
+		Board board = new Board();
+		assertFalse(board.isValidPosition(new Position(-1,3)));
+		assertFalse(board.isValidPosition(new Position(2,-1)));
+	}
+
+ 	@Test
+	public void testIsValidPositionTooBig() {
+		Board board = new Board();
+		assertFalse(board.isValidPosition(new Position(6,3)));
+		assertFalse(board.isValidPosition(new Position(2,10)));
+	}
 	
 	@Test
 	public void testIsSpaceReturnsNull() {

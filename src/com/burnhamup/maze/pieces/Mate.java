@@ -1,7 +1,7 @@
 package com.burnhamup.maze.pieces;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.burnhamup.maze.Board;
 import com.burnhamup.maze.Color;
@@ -19,9 +19,9 @@ public class Mate extends Piece {
 	}
 
 	@Override
-	public List<Position> getValidMoves(Board board) {
+	public Set<Position> getValidMoves(Board board) {
 		//Go diagonally in all directions.
-		List<Position> list = new ArrayList<Position>();
+		Set<Position> list = new HashSet<Position>();
 		Position checkPosition = this.position.clone();
 		
 		checkPosition.col-=1; checkPosition.row-=1;
@@ -50,8 +50,6 @@ public class Mate extends Piece {
 			list.add(checkPosition.clone());
 			checkPosition.col+=1; checkPosition.row-=1;
 		}
-		
-		
 		return list;
 	}
 

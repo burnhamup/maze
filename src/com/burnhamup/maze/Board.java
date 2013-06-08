@@ -61,6 +61,10 @@ public class Board {
 	 * @return true if the position is a legal position to place a piece
 	 */
 	protected boolean isValidPosition(Position position) {
+		if (position.row < 0 || position.row >= rows || 
+		    position.col < 0 || position.col >= cols) {
+		    return false;
+		}
 		return getSpace(position) != null;
 	}
 	

@@ -12,12 +12,12 @@
 
   <target name="build">
     <mkdir dir="${src_build}" />
-    <javac includeantruntime="false" srcdir="${src_dir}" destdir="${src_build}" />
+    <javac includeantruntime="false" srcdir="${src_dir}" destdir="${src_build}" debug="on"/>
   </target>
 
   <target name="build-test" depends="build">
     <mkdir dir="${test_build}" />
-    <javac includeantruntime="false" srcdir="${test_dir}" destdir="${test_build}">
+    <javac includeantruntime="false" srcdir="${test_dir}" destdir="${test_build}" debug="on">
       <classpath>
 	<pathelement location="${src_build}" />
 	<pathelement location="${junit}" />
