@@ -97,4 +97,45 @@ public class ShadowTest {
         assertTrue(moveSet.contains(new Position(3,7)));
         assertTrue(moveSet.contains(new Position(3,8)));
     }
+
+    @Test
+    public void testCornerPosition() {
+        Board b = new Board();
+        Mate mate = new Mate(Color.WHITE);
+        Set<Mate> mateSet = new HashSet<>();
+        mateSet.add(mate);
+        Piece shadow = new Shadow(Color.WHITE, mateSet);
+        
+        b.addPiece(mate, new Position(2,0));
+        b.addPiece(shadow, new Position(5,5));
+        
+        Set<Position> moveSet = shadow.getValidMoves(b);
+        assertTrue(moveSet.size() == 4);
+        assertTrue(moveSet.contains(new Position(1,1)));
+        assertTrue(moveSet.contains(new Position(2,1)));
+        assertTrue(moveSet.contains(new Position(3,1)));
+        assertTrue(moveSet.contains(new Position(3,0)));
+    }
+    
+    @Test
+    public void testOccupiedPosition() {
+        Board b = new Board();
+        Mate mate = new Mate(Color.WHITE);
+        Set<Mate> mateSet = new HashSet<>();
+        mateSet.add(mate);
+        Piece shadow = new Shadow(Color.WHITE, mateSet);
+        Piece otherMate = new Mate(Color.BLACK);
+        b.addPiece(mate, new Position(4,4));
+        b.addPiece(shadow, new Position(3,3));
+        b.addPiece(otherMate, new Position(4,3));
+        
+        Set<Position> moveSet = shadow.getValidMoves(b);
+        assertTrue(moveSet.size() == 6);
+        assertTrue(moveSet.contains(new Position(3,4)));
+        assertTrue(moveSet.contains(new Position(3,5)));
+        assertTrue(moveSet.contains(new Position(4,5)));
+        assertTrue(moveSet.contains(new Position(5,3)));
+        assertTrue(moveSet.contains(new Position(5,4)));
+        assertTrue(moveSet.contains(new Position(5,5)));
+    }
 }
