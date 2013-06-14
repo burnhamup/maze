@@ -11,7 +11,7 @@ import com.burnhamup.maze.Color;
 import com.burnhamup.maze.Position;
 
 public class PieceTest {
-	
+
 	private class MockPiece extends Piece {
 
 		public MockPiece(Color c) {
@@ -23,16 +23,16 @@ public class PieceTest {
 			// TODO Auto-generated method stub
 			return null;
 		}
-		
+
 	}
 
 	@Test
 	public void testGetPosition() {
 		Piece p = new MockPiece(Color.WHITE);
-		p.position = new Position(0,0);
-		assertEquals(new Position(0,0), p.getPosition());
-		p.position = new Position(4,1);
-		assertEquals(new Position(4,1), p.getPosition());
+		p.position = new Position(0, 0);
+		assertEquals(new Position(0, 0), p.getPosition());
+		p.position = new Position(4, 1);
+		assertEquals(new Position(4, 1), p.getPosition());
 	}
 
 	@Test
@@ -55,8 +55,8 @@ public class PieceTest {
 	@Test
 	public void testSetPosition() {
 		Piece p = new MockPiece(Color.WHITE);
-		p.setPosition(new Position(2,2));
-		assertEquals(new Position(2,2), p.position);
+		p.setPosition(new Position(2, 2));
+		assertEquals(new Position(2, 2), p.position);
 	}
 
 	@Test
@@ -72,8 +72,8 @@ public class PieceTest {
 	@Test
 	public void testMovePiece() {
 		Piece p = new MockPiece(Color.WHITE);
-		p.movePiece(new Position(2,2));
-		assertEquals(new Position(2,2), p.position);
+		p.movePiece(new Position(2, 2));
+		assertEquals(new Position(2, 2), p.position);
 	}
 
 	@Test
@@ -88,25 +88,25 @@ public class PieceTest {
 	public void testEqualsObject() {
 		Piece p1 = new MockPiece(Color.WHITE);
 		Piece p2 = new MockPiece(Color.WHITE);
-		assertEquals(p1,p1);
-		assertEquals(p2,p2);
+		assertEquals(p1, p1);
+		assertEquals(p2, p2);
 		assertFalse(p1.equals(null));
-		assertFalse(p1.equals(new Position(2,1)));
-		
-		assertEquals(p1,p2);
-		p1.movePiece(new Position(2,1));
+		assertFalse(p1.equals(new Position(2, 1)));
+
+		assertEquals(p1, p2);
+		p1.movePiece(new Position(2, 1));
 		assertFalse(p1.equals(p2));
 		assertFalse(p2.equals(p1));
-		p2.movePiece(new Position(2,1));
-		assertEquals(p1,p2);
+		p2.movePiece(new Position(2, 1));
+		assertEquals(p1, p2);
 		p2.color = Color.BLACK;
 		assertFalse(p1.equals(p2));
 		p1.color = Color.BLACK;
-		assertEquals(p1,p2);
+		assertEquals(p1, p2);
 		p1.kill();
 		assertFalse(p1.equals(p2));
 		p2.kill();
-		assertEquals(p1,p2);
+		assertEquals(p1, p2);
 	}
 
 }

@@ -29,8 +29,6 @@ public class SpaceTest {
 		assertEquals(Color.BLACK, s.getColor());
 		s.setColor(Color.WHITE);
 		assertEquals(Color.WHITE, s.getColor());
-		Color.values();
-		Color.valueOf("BLACK");
 	}
 
 	@Test

@@ -1,5 +1,9 @@
 package com.burnhamup.maze;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.burnhamup.maze.pieces.Piece;
 
 /**
@@ -45,7 +49,7 @@ public class Board {
 				if (col == 3 || col == 6) {
 					isDesert = true;
 				}
-				if ((row*rows +col) %2 == 0) {
+				if ((row +col) %2 == 0) {
 					color = Color.BLACK;
 				} else {
 					color = Color.WHITE;
@@ -123,7 +127,7 @@ public class Board {
 		}
 		Piece movingPiece = getPiece(current);
 		getSpace(current).setOccupyingPiece(null);
-		movingPiece.setPosition(newPosition);
+		movingPiece.movePiece(newPosition);
 		getSpace(newPosition).setOccupyingPiece(movingPiece);
 		
 		if (getSpace(newPosition).isDesert()) {
@@ -163,6 +167,50 @@ public class Board {
 		
 		return false;
 	}
-	
-	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(board);
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Board other = (Board) obj;
+		if (!Arrays.deepEquals(board, other.board))
+			return false;
+		return true;
+	}
+
+	public Set<Position> getAllColorPieces(Position position) {
+		Set<Position> result = new HashSet<>();
+		Position p = null;
+		Space s = null;
+		Color c = getSpace(position).getColor();
+		for (int i = 0; i<rows; i++) {
+			for (int j =0; j<cols; j++) {
+				p = new Position(i,j);
+				s = getSpace(p);
+				if (s != null && s.getColor() == c) {
+					result.add(p);
+				}
+			}
+		}
+		return result;
+	}
+
 }
