@@ -9,6 +9,53 @@ public class Position implements Cloneable {
 		this.row = row;
 		this.col = col;
 	}
+	
+	public Position(int spaceNumber) {
+		if (spaceNumber  == 0 || spaceNumber == 1 ) {
+			this.row = spaceNumber + 1;
+			this.col = 0;
+		}
+		else if (spaceNumber > 2 && spaceNumber <= 6) {
+			this.row = spaceNumber-2;
+			this.col = 1;
+		}
+		else if (spaceNumber > 6 && spaceNumber <= 42) {
+			spaceNumber -=6;
+			this.row = spaceNumber %6;
+			this.col = spaceNumber / 6;
+		}
+		else if (spaceNumber > 42 && spaceNumber <= 46) {
+			spaceNumber -= 42;
+			this.row = spaceNumber + 1;
+			this.col = 8;
+		}
+		else if (spaceNumber == 47 || spaceNumber == 48) {
+			spaceNumber -= 46;
+			this.row  = spaceNumber + 1;
+			this.col = 9;
+		} else {
+			throw new IllegalArgumentException();
+		}
+		
+	}
+	
+	public int getSpaceNumber() {
+		if (col == 0) {
+			return row -1;
+		} 
+		else if (col == 1) {
+			return row +2;
+		}
+		else if (col > 1 || col < 8) {
+			return 6 + row + col *6;
+		} else if (col == 8) {
+			return 42 + row;
+		} else if (col == 9) {
+			return 45 + row;
+		} else {
+			throw new IllegalStateException("Somehow this position is invalid.");
+		}
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
