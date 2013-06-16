@@ -45,8 +45,10 @@ public class StoneTest {
 		Stone s = new Stone(Color.BLACK);
 		b.addPiece(s, new Position(3,6));
 		b.addPiece(new Stone(Color.BLACK), new Position(2,6));
+		b.addPiece(new Stone(Color.WHITE), new Position(3,5));
 		Set<Position> moveSet = s.getValidMoves(b);
-		assertTrue(moveSet.size() == 2);
+		assertTrue(moveSet.size() == 3);
+		assertTrue(moveSet.contains(new Position(2,7)));
 		assertTrue(moveSet.contains(new Position(4,5)));
 		assertTrue(moveSet.contains(new Position(4,7)));
 		

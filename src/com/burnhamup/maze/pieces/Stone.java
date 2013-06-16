@@ -20,20 +20,37 @@ public class Stone extends Piece {
 		if (isDead()) {
 			return result;
 		}
-		if (board.isPositionEmpty(new Position(position.row-1,position.col))) {
-			if (board.isPositionEmpty(new Position(position.row-1, position.col-1))) {
-				result.add(new Position(position.row-1, position.col-1));
-			}
-			if (board.isPositionEmpty(new Position(position.row-1, position.col+1))) {
-				result.add(new Position(position.row-1, position.col+1));
+		Position p;
+		Position above = new Position(position.row-1,position.col);		
+		Position below = new Position(position.row+1,position.col);
+		Position left = new Position(position.row,position.col-1);
+		Position right = new Position(position.row-1,position.col+1);
+		if (board.isPositionEmpty(above) ||
+				board.isPositionEmpty(left)) {
+			p = new Position(position.row-1, position.col-1);
+			if (board.isPositionEmpty(p)) {
+				result.add(p);
 			}
 		}
-		if (board.isPositionEmpty(new Position(position.row+1,position.col))) {
-			if (board.isPositionEmpty(new Position(position.row+1, position.col-1))) {
-				result.add(new Position(position.row+1, position.col-1));
+		if (board.isPositionEmpty(above) ||
+				board.isPositionEmpty(right)) {
+			p = new Position(position.row-1, position.col+1);
+			if (board.isPositionEmpty(p)) {
+				result.add(p);
 			}
-			if (board.isPositionEmpty(new Position(position.row+1, position.col+1))) {
-				result.add(new Position(position.row+1, position.col+1));
+		}
+		if (board.isPositionEmpty(below) ||
+				board.isPositionEmpty(left)) {
+			p = new Position(position.row+1, position.col-1);
+			if (board.isPositionEmpty(p)) {
+				result.add(p);
+			}
+		}
+		if (board.isPositionEmpty(below) ||
+				board.isPositionEmpty(right)) {
+			p = new Position(position.row+1, position.col+1);
+			if (board.isPositionEmpty(p)) {
+				result.add(p);
 			}
 		}
 		return result;
