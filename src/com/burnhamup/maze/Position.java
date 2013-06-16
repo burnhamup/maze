@@ -11,7 +11,7 @@ public class Position implements Cloneable {
 	}
 	
 	public Position(int spaceNumber) {
-		if (spaceNumber  == 0 || spaceNumber == 1 ) {
+		if (spaceNumber  == 1 || spaceNumber == 2 ) {
 			this.row = spaceNumber + 1;
 			this.col = 0;
 		}
@@ -20,13 +20,12 @@ public class Position implements Cloneable {
 			this.col = 1;
 		}
 		else if (spaceNumber > 6 && spaceNumber <= 42) {
-			spaceNumber -=6;
-			this.row = spaceNumber %6;
-			this.col = spaceNumber / 6;
+			this.row = (spaceNumber -1) %6;
+			this.col = (spaceNumber-1) / 6 + 1;
 		}
 		else if (spaceNumber > 42 && spaceNumber <= 46) {
 			spaceNumber -= 42;
-			this.row = spaceNumber + 1;
+			this.row = spaceNumber;
 			this.col = 8;
 		}
 		else if (spaceNumber == 47 || spaceNumber == 48) {
@@ -46,8 +45,8 @@ public class Position implements Cloneable {
 		else if (col == 1) {
 			return row +2;
 		}
-		else if (col > 1 || col < 8) {
-			return 6 + row + col *6;
+		else if (col > 1 && col < 8) {
+			return 1 + row + (col-1) *6;
 		} else if (col == 8) {
 			return 42 + row;
 		} else if (col == 9) {
@@ -90,7 +89,7 @@ public class Position implements Cloneable {
 
 	@Override
 	public String toString() {
-		return "Position [row=" + row + ", col=" + col + "]";
+		return "" + getSpaceNumber();
 	}
 
 	public Position clone() {

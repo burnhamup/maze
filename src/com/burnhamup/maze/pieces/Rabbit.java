@@ -53,5 +53,9 @@ public class Rabbit extends Piece {
         }
 		return result;
 	}
+	
+	public String toString() {
+		return "R";
+	}
 
 }

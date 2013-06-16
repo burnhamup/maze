@@ -32,5 +32,9 @@ public class Lightning extends Piece {
         }
 		return result;	
 	}
+	
+	public String toString() {
+		return "L";
+	}
 
 }

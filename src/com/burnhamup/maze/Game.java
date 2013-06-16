@@ -18,16 +18,12 @@ import com.burnhamup.maze.pieces.Tree;
 public class Game {
 	protected Color currentTurn;
 	protected Board board;
-	protected Set<Mate> whiteMates;
-	protected Set<Mate> blackMates;
 	protected Set<Position> validMoves;
 	protected Position lastMovedPiece;
 	
 	public Game() {
 		currentTurn = Color.WHITE;
 		board = new Board();
-		whiteMates = new HashSet<>();
-		blackMates = new HashSet<>();
 		Mate whiteMate1 = new Mate(Color.WHITE);
 		Mate whiteMate2 = new Mate(Color.WHITE);
 		Mate blackMate1 = new Mate(Color.BLACK);
@@ -36,10 +32,6 @@ public class Game {
 		board.addPiece(whiteMate2, new Position(2));
 		board.addPiece(blackMate1, new Position(47));
 		board.addPiece(blackMate2, new Position(48));
-		whiteMates.add(whiteMate1);
-		whiteMates.add(whiteMate2);
-		blackMates.add(blackMate1);
-		blackMates.add(blackMate2);
 		validMoves = new HashSet<>();
 	}
 	
@@ -49,11 +41,11 @@ public class Game {
 	 * @param black List of black pieces that have either been loaded or randomized
 	 */
 	public void loadStartingPositions(List<Piece> white, List<Piece> black) {
-		for (int i =3; i <= white.size(); i++) {
-			board.addPiece(white.get(i), new Position(i));
+		for (int i =0; i < white.size(); i++) {
+			board.addPiece(white.get(i), new Position(i+3));
 		}
-		for (int j = 46; j > (46 - black.size()); j--) {
-			board.addPiece(black.get(j), new Position(j));
+		for (int j = 0; j < black.size(); j++) {
+			board.addPiece(black.get(j), new Position(46-j));
 		}
 	}
 	
@@ -68,13 +60,43 @@ public class Game {
 		loadStartingPositions(white,black);
 	}
 	
+	public List<Piece> loadSetStartingPosition(String text, Color c) {
+		List<Piece> result = new ArrayList<>();
+		for (int i=0; i< text.length(); i++) {
+			char letter = text.charAt(i);
+			switch (letter) {
+			case 'H': //Shadow
+				result.add(new Shadow(c));
+				break;
+			case 'L': //Lightning
+				result.add(new Lightning(c));
+				break;
+			case 'R':
+				result.add(new Rabbit(c));
+				break;
+			case 'T':
+				result.add(new Tree(c));
+				break;
+			case 'S':
+				result.add(new Stone(c));
+				break;
+			case '1':
+				result.add(new TimePawn(c,1));
+				break;
+			case '2':
+				result.add(new TimePawn(c,2));
+				break;
+			case '3':
+				result.add(new TimePawn(c,3));
+				break;
+			}
+		}
+		return result;
+	}
+	
 	private List<Piece> initialPieces(Color color) {
 		List<Piece> result = new ArrayList<>();
-		if (color == Color.BLACK) {
-			result.add(new Shadow(color, blackMates));
-		} else {
-			result.add(new Shadow(color, whiteMates));
-		}
+		result.add(new Shadow(color));
 		result.add(new Lightning(color));
 		result.add(new Rabbit(color));
 		result.add(new Tree(color));
@@ -87,14 +109,6 @@ public class Game {
 		}
 		return result;
 		
-	}
-	
-	public Set<Mate> getMates(Color c) {
-		if (c == Color.BLACK) {
-			return blackMates;
-		} else {
-			return whiteMates;
-		}
 	}
 	
 	
@@ -127,8 +141,17 @@ public class Game {
 		if (lastMovedPiece!= null) {
 			if (validMoves.contains(end)) {
 				board.movePiece(lastMovedPiece, end);
+				if (currentTurn == Color.WHITE) {
+					currentTurn = Color.BLACK;
+				} else {
+					currentTurn = Color.WHITE;
+				}
 			}
 		}
+	}
+
+	public Board getBoard() {
+		return board;
 	}
 	
 	

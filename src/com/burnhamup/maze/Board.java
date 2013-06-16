@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.burnhamup.maze.pieces.Piece;
+import com.burnhamup.maze.pieces.Mate;
 
 /**
  * A class representing the board for MAZE
@@ -26,9 +27,12 @@ public class Board {
 	protected Space board[][];
 	public static final int rows = 6;
 	public static final int cols = 10;
-	
+	protected Set<Mate> blackMates;
+	protected Set<Mate> whiteMates;
 	
 	public Board() {
+		blackMates = new HashSet<>();
+		whiteMates = new HashSet<>();
 		board = new Space[rows][cols];
 		Color color = null;
 		for (int row =0; row<rows;row++) {
@@ -50,9 +54,9 @@ public class Board {
 					isDesert = true;
 				}
 				if ((row +col) %2 == 0) {
-					color = Color.BLACK;
-				} else {
 					color = Color.WHITE;
+				} else {
+					color = Color.BLACK;
 				}
 				board[row][col] = new Space(new Position(row,col), color, isDesert);
 			}
@@ -76,7 +80,7 @@ public class Board {
 	 * @param position
 	 * @return Returns the Space at the given position 
 	 */
-	protected Space getSpace(Position position) {
+	public Space getSpace(Position position) {
 		return board[position.row][position.col];
 	}
 	
@@ -107,6 +111,14 @@ public class Board {
 		}
 		getSpace(position).setOccupyingPiece(piece);
 		piece.setPosition(position);
+		if (piece.getClass() == Mate.class) {
+			Mate mate = (Mate) piece;
+			if (piece.getColor() == Color.WHITE) {
+				whiteMates.add(mate);
+			} else {
+				blackMates.add(mate);
+			}
+		}
 	}
 	
 	/**
@@ -167,6 +179,15 @@ public class Board {
 		
 		return false;
 	}
+	
+	
+	public Set<Mate> getMates(Color c) {
+		if (c == Color.BLACK) {
+			return blackMates;
+		} else {
+			return whiteMates;
+		}
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -196,11 +217,10 @@ public class Board {
 		return true;
 	}
 
-	public Set<Position> getAllColorPieces(Position position) {
+	public Set<Position> getAllColorPieces(Color c) {
 		Set<Position> result = new HashSet<>();
 		Position p = null;
 		Space s = null;
-		Color c = getSpace(position).getColor();
 		for (int i = 0; i<rows; i++) {
 			for (int j =0; j<cols; j++) {
 				p = new Position(i,j);

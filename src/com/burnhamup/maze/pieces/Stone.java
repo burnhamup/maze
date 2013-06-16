@@ -15,6 +15,7 @@ public class Stone extends Piece {
 
 	@Override
 	public Set<Position> getValidMoves(Board board) {
+		//TODO fix Stone. It appears to be able to move diagonally as long as either space is free.
 		Set<Position> result = new HashSet<>();
 		if (isDead()) {
 			return result;
@@ -36,6 +37,10 @@ public class Stone extends Piece {
 			}
 		}
 		return result;
+	}
+	
+	public String toString() {
+		return "S";
 	}
 
 }

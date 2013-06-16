@@ -13,9 +13,9 @@ import com.burnhamup.maze.Position;
 public class TreeTest {
 
 	@Test
-	public final void testGetValidMovesWhiteStartingSpace() {
+	public final void testGetValidMovesBlack() {
 		Board b = new Board();
-		Tree tree = new Tree(Color.WHITE);
+		Tree tree = new Tree(Color.BLACK);
 		b.addPiece(tree, new Position(3,6));
 		Set<Position> moveSet = tree.getValidMoves(b);
 		
@@ -46,9 +46,9 @@ public class TreeTest {
 	}
 	
 	@Test
-	public final void testGetValidMovesBlackStartingSpace() {
+	public final void testGetValidMovesWhite() {
 		Board b = new Board();
-		Tree tree = new Tree(Color.BLACK);
+		Tree tree = new Tree(Color.WHITE);
 		b.addPiece(tree, new Position(3,5));
 		Set<Position> moveSet = tree.getValidMoves(b);
 		
@@ -81,9 +81,9 @@ public class TreeTest {
 	@Test
 	public final void testGetValidMovesBlockingPiece() {
 		Board b = new Board();
-		Tree tree = new Tree(Color.BLACK);
+		Tree tree = new Tree(Color.WHITE);
 		b.addPiece(tree, new Position(3,5));
-		b.addPiece(new Tree(Color.BLACK), new Position(5,3));
+		b.addPiece(new Tree(Color.WHITE), new Position(5,3));
 		Set<Position> moveSet = tree.getValidMoves(b);
 		
 		assertEquals(22, moveSet.size());

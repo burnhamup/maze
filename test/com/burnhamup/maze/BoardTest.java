@@ -26,9 +26,9 @@ public class BoardTest {
 					assertNull(board.board[row][col]);
 				} else {
 					Space space = board.board[row][col];
-					Color color = Color.WHITE;
+					Color color = Color.BLACK;
 					if ((row+col) % 2 == 0) {
-						color = Color.BLACK;
+						color = Color.WHITE;
 					}
 					assertEquals(new Position(row,col), space.getPosition());
 					assertNull(space.getOccupyingPiece());
@@ -42,6 +42,7 @@ public class BoardTest {
 				
 			}
 		}
+		assertTrue(board.getSpace(new Position(1)).getColor() == Color.WHITE);
 		
 	}
 	

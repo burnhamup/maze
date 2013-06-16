@@ -19,7 +19,7 @@ public class Tree extends Piece {
 		if (isDead()) {
 			return new HashSet<Position>();
 		}
-		Set<Position> result = board.getAllColorPieces(position);
+		Set<Position> result = board.getAllColorPieces(getColor());
         Iterator<Position> iterator = result.iterator();
         while (iterator.hasNext()) {
             if (!board.isPositionEmpty(iterator.next())) {
@@ -36,6 +36,10 @@ public class Tree extends Piece {
 	public void movePiece(Position p) {
 		super.movePiece(p);
 		kill();
+	}
+	
+	public String toString() {
+		return "T";
 	}
 
 }

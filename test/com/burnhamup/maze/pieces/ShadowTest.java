@@ -3,7 +3,6 @@ package com.burnhamup.maze.pieces;
 import static org.junit.Assert.*;
 
 import java.util.Set;
-import java.util.HashSet;
 
 import org.junit.Test;
 
@@ -13,31 +12,10 @@ import com.burnhamup.maze.Position;
 
 public class ShadowTest {
 
-	@SuppressWarnings("unused")
-	@Test(expected = IllegalArgumentException.class)
-	public void testMateColorMustMatch() {
-		Mate mate = new Mate(Color.BLACK);
-		Set<Mate> mateSet = new HashSet<>();
-		mateSet.add(mate);
-		Piece shadow = new Shadow(Color.WHITE, mateSet);
-	}
-
-	@SuppressWarnings("unused")
-	@Test(expected = IllegalArgumentException.class)
-	public void testAllMateColorMustMatch() {
-		Mate mate = new Mate(Color.BLACK);
-		Mate mate2 = new Mate(Color.WHITE);
-		Set<Mate> mateSet = new HashSet<>();
-		mateSet.add(mate);
-		mateSet.add(mate2);
-		Piece shadow = new Shadow(Color.BLACK, mateSet);
-	}
-
 	@Test
 	public void testNoMatesNoMoves() {
 		Board b = new Board();
-		Set<Mate> mateSet = new HashSet<>();
-		Piece shadow = new Shadow(Color.WHITE, mateSet);
+		Piece shadow = new Shadow(Color.WHITE);
 		b.addPiece(shadow, new Position(3, 3));
 
 		Set<Position> moveSet = shadow.getValidMoves(b);
@@ -47,9 +25,7 @@ public class ShadowTest {
 	@Test
 	public void testNoMatesOnBoard() {
 		Board b = new Board();
-		Set<Mate> mateSet = new HashSet<>();
-		mateSet.add(new Mate(Color.WHITE));
-		Piece shadow = new Shadow(Color.WHITE, mateSet);
+		Piece shadow = new Shadow(Color.WHITE);
 		b.addPiece(shadow, new Position(3, 3));
 
 		Set<Position> moveSet = shadow.getValidMoves(b);
@@ -60,9 +36,7 @@ public class ShadowTest {
 	public void testCenterPositionOneMate() {
 		Board b = new Board();
 		Mate mate = new Mate(Color.WHITE);
-		Set<Mate> mateSet = new HashSet<>();
-		mateSet.add(mate);
-		Piece shadow = new Shadow(Color.WHITE, mateSet);
+		Piece shadow = new Shadow(Color.WHITE);
 
 		b.addPiece(mate, new Position(4, 4));
 		b.addPiece(shadow, new Position(3, 0));
@@ -83,13 +57,10 @@ public class ShadowTest {
 	public void testCenterPositionTwoMates() {
 		Board b = new Board();
 		Mate mate = new Mate(Color.WHITE);
-		Set<Mate> mateSet = new HashSet<>();
-		mateSet.add(mate);
 		b.addPiece(mate, new Position(3, 3));
 		mate = new Mate(Color.WHITE);
-		mateSet.add(mate);
 		b.addPiece(mate, new Position(2, 7));
-		Piece shadow = new Shadow(Color.WHITE, mateSet);
+		Piece shadow = new Shadow(Color.WHITE);
 		b.addPiece(shadow, new Position(1, 1));
 
 		Set<Position> moveSet = shadow.getValidMoves(b);
@@ -116,9 +87,7 @@ public class ShadowTest {
 	public void testCornerPosition() {
 		Board b = new Board();
 		Mate mate = new Mate(Color.WHITE);
-		Set<Mate> mateSet = new HashSet<>();
-		mateSet.add(mate);
-		Piece shadow = new Shadow(Color.WHITE, mateSet);
+		Piece shadow = new Shadow(Color.WHITE);
 
 		b.addPiece(mate, new Position(2, 0));
 		b.addPiece(shadow, new Position(5, 5));
@@ -135,9 +104,7 @@ public class ShadowTest {
 	public void testOccupiedPosition() {
 		Board b = new Board();
 		Mate mate = new Mate(Color.WHITE);
-		Set<Mate> mateSet = new HashSet<>();
-		mateSet.add(mate);
-		Piece shadow = new Shadow(Color.WHITE, mateSet);
+		Piece shadow = new Shadow(Color.WHITE);
 		Piece otherMate = new Mate(Color.BLACK);
 		b.addPiece(mate, new Position(4, 4));
 		b.addPiece(shadow, new Position(3, 3));
@@ -157,9 +124,7 @@ public class ShadowTest {
 	public final void testGetValidMovesIsDead() {
 		Board b = new Board();
 		Mate m = new Mate(Color.BLACK);
-		Set<Mate> mateSet = new HashSet<>();
-		mateSet.add(m);
-		Piece p = new Shadow(Color.BLACK, mateSet);
+		Piece p = new Shadow(Color.BLACK);
 		b.addPiece(p, new Position(3,5));
 		b.addPiece(m, new Position(5,5));
 		p.kill();

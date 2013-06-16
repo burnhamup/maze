@@ -62,5 +62,9 @@ public class Mate extends Piece {
 		}
 		return list;
 	}
+	
+	public String toString() {
+		return "M";
+	}
 
 }
