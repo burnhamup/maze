@@ -21,6 +21,8 @@ public class Game {
 	protected Set<Position> validMoves;
 	protected Position lastMovedPiece;
 	
+	public boolean drubenVariation = false; //Whether or not the time pawns can move less than the number of their spaces
+	
 	public Game() {
 		currentTurn = Color.WHITE;
 		board = new Board();

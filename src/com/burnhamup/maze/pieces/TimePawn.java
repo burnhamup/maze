@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.burnhamup.maze.Board;
 import com.burnhamup.maze.Color;
+import com.burnhamup.maze.Game;
 import com.burnhamup.maze.Position;
 
 public class TimePawn extends Piece {
@@ -25,6 +26,9 @@ public class TimePawn extends Piece {
 		Set<Position> result = new HashSet<>();
 		if (isDead) {
 			return result;
+		}
+		if (Game.drubenVariation) {
+			return getValidDrubenMoves(board);
 		}
 		//Check above.
 		int currentNumberOfMoves = numberOfMoves;
@@ -69,6 +73,43 @@ public class TimePawn extends Piece {
 		}
 		if (currentNumberOfMoves == 0) {
 			result.add(side);
+		}
+		return result;
+	}
+
+	private Set<Position> getValidDrubenMoves(Board board) {
+		Set<Position> result = new HashSet<>();
+		//Check above
+		Position current = position.clone();
+		int currentNumberOfMoves = numberOfMoves;
+		current.row--;
+		while (board.isPositionEmpty(current) && currentNumberOfMoves > 0) {
+			result.add(current.clone());
+			current.row--;
+		}
+		//Check Below
+		current = position.clone();
+		current.row++;
+		currentNumberOfMoves = numberOfMoves;
+		while (board.isPositionEmpty(current) &&currentNumberOfMoves > 0) {
+			result.add(current.clone());
+			current.row++;
+		}
+		//Check Side
+		current = position.clone();
+		if (color == Color.BLACK) {
+			current.col--;
+		} else {
+			current.col++;
+		}
+		currentNumberOfMoves = numberOfMoves;
+		while (board.isPositionEmpty(current) && currentNumberOfMoves > 0 ) {
+			result.add(current.clone());
+			if (color == Color.BLACK) {
+				current.col--;
+			} else {
+				current.col++;
+			}
 		}
 		return result;
 	}

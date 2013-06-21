@@ -33,7 +33,7 @@ public class View {
 					} else {
 						label += "| " + board.getPiece(p) + " |";
 					}
-					number += "| " + String.format("%02d", p.getSpaceNumber())  + "|";
+					number += "| " + String.format("%s", p.toString())  + "|";
 				}
 			}
 			System.out.println(top);

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import com.burnhamup.maze.Board;
 import com.burnhamup.maze.Color;
+import com.burnhamup.maze.Game;
 import com.burnhamup.maze.Position;
 
 public class TimePawnTest {
@@ -71,8 +72,46 @@ public class TimePawnTest {
 		b.addPiece(new TimePawn(Color.WHITE,3), new Position(3,2));
 		Set<Position> moveSet = pawn.getValidMoves(b);
 		assertTrue(moveSet.size() == 0);
-		
 	}
+	
+	@Test
+	public final void testGetValidMovesDruben() {
+		Game.drubenVariation = true;
+		Board b = new Board();
+		TimePawn pawn = new TimePawn(Color.BLACK, 3);
+		b.addPiece(pawn, new Position(3,5));
+		Set<Position> moveSet = pawn.getValidMoves(b);
+		
+		assertEquals(8,moveSet.size());
+		assertTrue(moveSet.contains(new Position(3,4)));
+		assertTrue(moveSet.contains(new Position(3,3)));
+		assertTrue(moveSet.contains(new Position(3,2)));
+		assertTrue(moveSet.contains(new Position(2,5)));
+		assertTrue(moveSet.contains(new Position(1,5)));
+		assertTrue(moveSet.contains(new Position(0,5)));
+		assertTrue(moveSet.contains(new Position(4,5)));
+		assertTrue(moveSet.contains(new Position(5,5)));
+		Game.drubenVariation = false;
+	}
+	
+	@Test
+	public final void testGetValidMovesDrubenBlocked() {
+		Game.drubenVariation = true;
+		Board b = new Board();
+		TimePawn pawn = new TimePawn(Color.BLACK, 3);
+		b.addPiece(pawn, new Position(3,5));
+		b.addPiece(new TimePawn(Color.WHITE, 2), new Position(3,4));
+		b.addPiece(new TimePawn(Color.WHITE,1), new Position(2,5));
+		Set<Position> moveSet = pawn.getValidMoves(b);
+		
+		assertEquals(4,moveSet.size());
+		assertTrue(moveSet.contains(new Position(3,3)));
+		assertTrue(moveSet.contains(new Position(3,2)));
+		assertTrue(moveSet.contains(new Position(4,5)));
+		assertTrue(moveSet.contains(new Position(5,5)));	
+		Game.drubenVariation = false;
+	}
+	
 	
 	@Test
 	public final void testGetValidMovesIsDead() {

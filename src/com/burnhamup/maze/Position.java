@@ -89,7 +89,7 @@ public class Position implements Cloneable {
 
 	@Override
 	public String toString() {
-		return "" + getSpaceNumber();
+		return "" + row + ""+  col;
 	}
 
 	public Position clone() {
