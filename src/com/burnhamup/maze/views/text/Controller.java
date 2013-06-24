@@ -16,6 +16,7 @@ public class Controller {
 		String blackString = "R2H1TSTH323LRLS1";
 		game.loadStartingPositions(game.loadSetStartingPosition(whiteString, Color.WHITE), 
 									game.loadSetStartingPosition(blackString, Color.BLACK));
+		game.getBoard().setDrubenVariation(true);
 		View view = new View(game);
 		//Add game logic.
 		System.setIn(new FileInputStream("input.txt"));

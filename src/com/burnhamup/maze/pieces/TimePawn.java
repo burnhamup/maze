@@ -27,7 +27,7 @@ public class TimePawn extends Piece {
 		if (isDead) {
 			return result;
 		}
-		if (Game.drubenVariation) {
+		if (board.isDrubenVariation()) {
 			return getValidDrubenMoves(board);
 		}
 		//Check above.
@@ -86,6 +86,7 @@ public class TimePawn extends Piece {
 		while (board.isPositionEmpty(current) && currentNumberOfMoves > 0) {
 			result.add(current.clone());
 			current.row--;
+			currentNumberOfMoves--;
 		}
 		//Check Below
 		current = position.clone();
@@ -94,6 +95,7 @@ public class TimePawn extends Piece {
 		while (board.isPositionEmpty(current) &&currentNumberOfMoves > 0) {
 			result.add(current.clone());
 			current.row++;
+			currentNumberOfMoves--;
 		}
 		//Check Side
 		current = position.clone();
@@ -110,6 +112,7 @@ public class TimePawn extends Piece {
 			} else {
 				current.col++;
 			}
+			currentNumberOfMoves--;
 		}
 		return result;
 	}

@@ -30,6 +30,8 @@ public class Board {
 	protected Set<Mate> blackMates;
 	protected Set<Mate> whiteMates;
 	
+	private boolean drubenVariation = false; //Whether or not the time pawns can move less than the number of their spaces
+	
 	public Board() {
 		blackMates = new HashSet<>();
 		whiteMates = new HashSet<>();
@@ -83,7 +85,6 @@ public class Board {
 	public Space getSpace(Position position) {
 		return board[position.row][position.col];
 	}
-	
 	
 	/**
 	 * 
@@ -231,6 +232,14 @@ public class Board {
 			}
 		}
 		return result;
+	}
+
+	public boolean isDrubenVariation() {
+		return drubenVariation;
+	}
+
+	public void setDrubenVariation(boolean drubenVariation) {
+		this.drubenVariation = drubenVariation;
 	}
 
 }
