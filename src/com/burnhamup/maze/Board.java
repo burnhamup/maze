@@ -33,8 +33,8 @@ public class Board {
 	private boolean drubenVariation = false; //Whether or not the time pawns can move less than the number of their spaces
 	
 	public Board() {
-		blackMates = new HashSet<>();
-		whiteMates = new HashSet<>();
+		blackMates = new HashSet<Mate>();
+		whiteMates = new HashSet<Mate>();
 		board = new Space[rows][cols];
 		Color color = null;
 		for (int row =0; row<rows;row++) {
@@ -219,7 +219,7 @@ public class Board {
 	}
 
 	public Set<Position> getAllColorPieces(Color c) {
-		Set<Position> result = new HashSet<>();
+		Set<Position> result = new HashSet<Position>();
 		Position p = null;
 		Space s = null;
 		for (int i = 0; i<rows; i++) {

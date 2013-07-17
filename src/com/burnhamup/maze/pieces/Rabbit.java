@@ -15,7 +15,7 @@ public class Rabbit extends Piece {
 
 	@Override
 	public Set<Position> getValidMoves(Board board) {
-        Set<Position> result = new HashSet<>();
+        Set<Position> result = new HashSet<Position>();
         if (isDead()) {
         	return result;
         }

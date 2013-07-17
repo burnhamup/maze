@@ -5,7 +5,6 @@ import java.util.Set;
 
 import com.burnhamup.maze.Board;
 import com.burnhamup.maze.Color;
-import com.burnhamup.maze.Game;
 import com.burnhamup.maze.Position;
 
 public class TimePawn extends Piece {
@@ -23,7 +22,7 @@ public class TimePawn extends Piece {
 
 	@Override
 	public Set<Position> getValidMoves(Board board) {
-		Set<Position> result = new HashSet<>();
+		Set<Position> result = new HashSet<Position>();
 		if (isDead) {
 			return result;
 		}
@@ -78,7 +77,7 @@ public class TimePawn extends Piece {
 	}
 
 	private Set<Position> getValidDrubenMoves(Board board) {
-		Set<Position> result = new HashSet<>();
+		Set<Position> result = new HashSet<Position>();
 		//Check above
 		Position current = position.clone();
 		int currentNumberOfMoves = numberOfMoves;

@@ -16,7 +16,7 @@ public class Shadow extends Piece {
     }
 
     public Set<Position> getValidMoves(Board b) {
-        Set<Position> result = new HashSet<>();
+        Set<Position> result = new HashSet<Position>();
         if (this.isDead()) {
             return result;
         }

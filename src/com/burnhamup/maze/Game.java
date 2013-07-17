@@ -3,6 +3,7 @@ package com.burnhamup.maze;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ public class Game {
 		board.addPiece(whiteMate2, new Position(2));
 		board.addPiece(blackMate1, new Position(47));
 		board.addPiece(blackMate2, new Position(48));
-		validMoves = new HashSet<>();
+		validMoves = new HashSet<Position>();
 	}
 	
 	/**
@@ -62,7 +63,7 @@ public class Game {
 	}
 	
 	public List<Piece> loadSetStartingPosition(String text, Color c) {
-		List<Piece> result = new ArrayList<>();
+		List<Piece> result = new ArrayList<Piece>();
 		for (int i=0; i< text.length(); i++) {
 			char letter = text.charAt(i);
 			switch (letter) {
@@ -96,7 +97,7 @@ public class Game {
 	}
 	
 	private List<Piece> initialPieces(Color color) {
-		List<Piece> result = new ArrayList<>();
+		List<Piece> result = new ArrayList<Piece>();
 		result.add(new Shadow(color));
 		result.add(new Lightning(color));
 		result.add(new Rabbit(color));
@@ -105,9 +106,7 @@ public class Game {
 		result.add(new TimePawn(color,1));
 		result.add(new TimePawn(color,2));
 		result.add(new TimePawn(color,3));
-		for (Piece p : result) {
-			result.add(p);
-		}
+		result.addAll(result);
 		return result;
 		
 	}
