@@ -3,9 +3,9 @@ package com.burnhamup.maze;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 
 import com.burnhamup.maze.pieces.Lightning;
 import com.burnhamup.maze.pieces.Mate;
@@ -16,7 +16,7 @@ import com.burnhamup.maze.pieces.Stone;
 import com.burnhamup.maze.pieces.TimePawn;
 import com.burnhamup.maze.pieces.Tree;
 
-public class Game {
+public class Game implements BoardListener{
 	protected Color currentTurn;
 	protected Board board;
 	protected Set<Position> validMoves;
@@ -26,6 +26,7 @@ public class Game {
 	public Game() {
 		currentTurn = Color.WHITE;
 		board = new Board();
+		board.addListener(this);
 		Mate whiteMate1 = new Mate(Color.WHITE);
 		Mate whiteMate2 = new Mate(Color.WHITE);
 		Mate blackMate1 = new Mate(Color.BLACK);
@@ -152,6 +153,30 @@ public class Game {
 
 	public Board getBoard() {
 		return board;
+	}
+	
+	private Vector<GameListener> listeners;
+	
+	public void registerListener(GameListener newListener) {
+		listeners.add(newListener);
+	}
+	
+	public void removeListener(GameListener listener) {
+		listeners.remove(listener);
+	}
+	
+	private void notifyGameHasChanged() {
+		for (GameListener l : listeners) {
+			l.gameHasChanged();
+		}
+	}
+	
+	public void boardHasChanged() {
+		notifyGameHasChanged();
+	}
+	
+	public void spaceHasChanged(Position p) {
+		//Nothing
 	}
 	
 	

@@ -3,6 +3,7 @@ package com.burnhamup.maze;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Vector;
 
 import com.burnhamup.maze.pieces.Piece;
 import com.burnhamup.maze.pieces.Mate;
@@ -120,6 +121,7 @@ public class Board {
 				blackMates.add(mate);
 			}
 		}
+		notifySpaceHasChanged(position);
 	}
 	
 	/**
@@ -146,6 +148,8 @@ public class Board {
 		if (getSpace(newPosition).isDesert()) {
 			movingPiece.kill();
 		}
+		notifySpaceHasChanged(current);
+		notifySpaceHasChanged(newPosition);
 		
 	}
 	
@@ -240,6 +244,29 @@ public class Board {
 
 	public void setDrubenVariation(boolean drubenVariation) {
 		this.drubenVariation = drubenVariation;
+	}
+	
+	private Vector<BoardListener> listeners;
+	
+	public void addListener(BoardListener b) {
+		listeners.add(b);
+	}
+	
+	public void removeListener(BoardListener b) {
+		listeners.remove(b);
+	}
+	
+	private void notifyBoardHasChanged() {
+		for (BoardListener l : listeners) {
+			l.boardHasChanged();
+		}
+	}
+	
+	private void notifySpaceHasChanged(Position p) {
+		for (BoardListener l : listeners) {
+			l.spaceHasChanged(p);
+		}
+		notifyBoardHasChanged();
 	}
 
 }
