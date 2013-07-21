@@ -1,9 +1,9 @@
 package com.burnhamup.maze.android;
 
-import com.burnhamup.maze.Game;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 
 public class GameActivity extends Activity {
@@ -11,9 +11,9 @@ public class GameActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Game game = new Game();
-		game.loadRandomStartingPositions(10);
+		Log.i("cburnham", "Constructed!");
 		//
+		//setContentView(new GameView(this));
 		setContentView(R.layout.activity_game);
 	}
 
