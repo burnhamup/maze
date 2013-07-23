@@ -1,5 +1,6 @@
 package com.burnhamup.maze;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,7 +17,11 @@ import com.burnhamup.maze.pieces.Stone;
 import com.burnhamup.maze.pieces.TimePawn;
 import com.burnhamup.maze.pieces.Tree;
 
-public class Game implements BoardListener{
+public class Game implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5361738109052980571L;
 	protected Color currentTurn;
 	protected Board board;
 	protected Set<Position> validMoves;
@@ -26,7 +31,6 @@ public class Game implements BoardListener{
 	public Game() {
 		currentTurn = Color.WHITE;
 		board = new Board();
-		board.addListener(this);
 		Mate whiteMate1 = new Mate(Color.WHITE);
 		Mate whiteMate2 = new Mate(Color.WHITE);
 		Mate blackMate1 = new Mate(Color.BLACK);
@@ -50,6 +54,7 @@ public class Game implements BoardListener{
 		for (int j = 0; j < black.size(); j++) {
 			board.addPiece(black.get(j), new Position(46-j));
 		}
+		this.notifyGameHasChanged();
 	}
 	
 	//TODO add support for a seeded random number generator
@@ -61,6 +66,7 @@ public class Game implements BoardListener{
 		Collections.shuffle(black);
 		black = black.subList(0, numberOfPieces);
 		loadStartingPositions(white,black);
+		this.notifyGameHasChanged();
 	}
 	
 	public List<Piece> loadSetStartingPosition(String text, Color c) {
@@ -149,13 +155,14 @@ public class Game implements BoardListener{
 				}
 			}
 		}
+		notifyGameHasChanged();
 	}
 
 	public Board getBoard() {
 		return board;
 	}
 	
-	private Vector<GameListener> listeners;
+	private Vector<GameListener> listeners  = new Vector<GameListener>();
 	
 	public void registerListener(GameListener newListener) {
 		listeners.add(newListener);
@@ -171,13 +178,10 @@ public class Game implements BoardListener{
 		}
 	}
 	
-	public void boardHasChanged() {
-		notifyGameHasChanged();
+	private void writeObject(java.io.ObjectOutputStream out) {
+		listeners = null;
 	}
 	
-	public void spaceHasChanged(Position p) {
-		//Nothing
-	}
 	
 	
 

@@ -10,6 +10,11 @@ import com.burnhamup.maze.Position;
 
 public class Tree extends Piece {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5125128225689547508L;
+
 	public Tree(Color c) {
 		super(c);
 	}
@@ -41,5 +46,12 @@ public class Tree extends Piece {
 	public String toString() {
 		return "T";
 	}
+
+	@Override
+	public PieceType getPieceType() {
+		return PieceType.Tree;
+	}
+	
+	
 
 }

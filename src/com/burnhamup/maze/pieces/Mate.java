@@ -13,6 +13,11 @@ public class Mate extends Piece {
 	// super(p, c);
 	// }
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6694384441132002965L;
+
 	public Mate(Color c) {
 		super(c);
 	}
@@ -65,6 +70,10 @@ public class Mate extends Piece {
 	
 	public String toString() {
 		return "M";
+	}
+	
+	public PieceType getPieceType() {
+		return PieceType.Mate;
 	}
 
 }

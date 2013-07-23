@@ -11,7 +11,12 @@ import com.burnhamup.maze.Position;
 
 public class Shadow extends Piece {
     
-    public Shadow(Color c) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1345722366960125L;
+
+	public Shadow(Color c) {
         super(c);
     }
 
@@ -47,6 +52,10 @@ public class Shadow extends Piece {
     
 	public String toString() {
 		return "H";
+	}
+	
+	public PieceType getPieceType() {
+		return PieceType.Shadow;
 	}
 
 }

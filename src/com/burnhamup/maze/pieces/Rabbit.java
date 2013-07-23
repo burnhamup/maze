@@ -9,6 +9,11 @@ import com.burnhamup.maze.Position;
 
 public class Rabbit extends Piece {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1639125724581013760L;
+
 	public Rabbit(Color c) {
 		super(c);
 	}
@@ -56,6 +61,10 @@ public class Rabbit extends Piece {
 	
 	public String toString() {
 		return "R";
+	}
+	
+	public PieceType getPieceType() {
+		return PieceType.Rabbit;
 	}
 
 }

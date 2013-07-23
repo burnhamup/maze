@@ -1,12 +1,23 @@
 package com.burnhamup.maze.pieces;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import com.burnhamup.maze.Board;
 import com.burnhamup.maze.Color;
 import com.burnhamup.maze.Position;
 
-public abstract class Piece {
+public abstract class Piece implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4778779278856889349L;
+	
+	public enum PieceType {
+		Mate, Shadow, Lightning, Rabbit, Tree, Stone, Pawn1, Pawn2, Pawn3
+		
+	}
 
 	public Position getPosition() {
 		return position;
@@ -23,6 +34,8 @@ public abstract class Piece {
 	public void setPosition(Position position) {
 		this.position = position;
 	}
+	
+	public abstract PieceType getPieceType();
 
 	protected Position position;
 	protected Color color;

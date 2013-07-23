@@ -12,6 +12,7 @@ import com.burnhamup.maze.Position;
 
 public class PieceTest {
 
+	@SuppressWarnings("serial")
 	private class MockPiece extends Piece {
 
 		public MockPiece(Color c) {
@@ -20,6 +21,12 @@ public class PieceTest {
 
 		@Override
 		public Set<Position> getValidMoves(Board board) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public PieceType getPieceType() {
 			// TODO Auto-generated method stub
 			return null;
 		}

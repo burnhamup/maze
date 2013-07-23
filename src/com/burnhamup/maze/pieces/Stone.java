@@ -9,6 +9,11 @@ import com.burnhamup.maze.Position;
 
 public class Stone extends Piece {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7843539027927911324L;
+
 	public Stone(Color c) {
 		super(c);
 	}
@@ -58,6 +63,10 @@ public class Stone extends Piece {
 	
 	public String toString() {
 		return "S";
+	}
+	
+	public PieceType getPieceType() {
+		return PieceType.Stone;
 	}
 
 }

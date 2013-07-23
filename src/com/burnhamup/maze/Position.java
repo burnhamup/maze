@@ -1,7 +1,13 @@
 package com.burnhamup.maze;
 
-public class Position implements Cloneable {
+import java.io.Serializable;
 
+public class Position implements Cloneable, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1709743506901087227L;
 	public int row;
 	public int col;
 

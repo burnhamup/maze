@@ -71,7 +71,7 @@ public class Board {
 	 * @param position Position to test
 	 * @return true if the position is a legal position to place a piece
 	 */
-	protected boolean isValidPosition(Position position) {
+	public boolean isValidPosition(Position position) {
 		if (position.row < 0 || position.row >= rows || 
 		    position.col < 0 || position.col >= cols) {
 		    return false;
@@ -246,7 +246,7 @@ public class Board {
 		this.drubenVariation = drubenVariation;
 	}
 	
-	private Vector<BoardListener> listeners;
+	private Vector<BoardListener> listeners = new Vector<BoardListener>();
 	
 	public void addListener(BoardListener b) {
 		listeners.add(b);

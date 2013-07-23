@@ -10,6 +10,11 @@ import com.burnhamup.maze.Position;
 
 public class Lightning extends Piece {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 290232936161837252L;
+
 	public Lightning(Color c) {
 		super(c);
 	}
@@ -35,6 +40,10 @@ public class Lightning extends Piece {
 	
 	public String toString() {
 		return "L";
+	}
+	
+	public PieceType getPieceType() {
+		return PieceType.Lightning;
 	}
 
 }

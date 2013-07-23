@@ -9,6 +9,10 @@ import com.burnhamup.maze.Position;
 
 public class TimePawn extends Piece {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 455895558523263389L;
 	protected int numberOfMoves;
 
 	public TimePawn(Color c, int numberOfMoves) {
@@ -146,6 +150,18 @@ public class TimePawn extends Piece {
 	
 	public String toString() {
 		return "" + numberOfMoves;
+	}
+	
+	public PieceType getPieceType() {
+		switch (numberOfMoves) {
+		case 1:
+			return PieceType.Pawn1;
+		case 2:
+			return PieceType.Pawn2;
+		case 3:
+			return PieceType.Pawn3;
+		}
+		return null;
 	}
 
 }

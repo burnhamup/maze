@@ -1,9 +1,15 @@
 package com.burnhamup.maze;
 
+import java.io.Serializable;
+
 import com.burnhamup.maze.pieces.Piece;
 
-public class Space {
+public class Space implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2032716727809960977L;
 	private Color color;
 	private boolean isDesert;
 	private Position position;
