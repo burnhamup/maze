@@ -21,7 +21,9 @@ public class GameActivity extends Activity {
 		setContentView(R.layout.activity_game);
 		gameView = (GameView) findViewById(R.id.gameView1);
 		if (savedInstanceState == null) {
-			gameView.initGame();
+			Game g = new Game();
+			g.loadRandomStartingPositions(16);
+			gameView.setGame(g);
 		} else {
 			Bundle bundle = savedInstanceState.getBundle("maze-game");
 			gameView.setGame((Game) bundle.getSerializable("game"));

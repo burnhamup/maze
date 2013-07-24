@@ -27,6 +27,7 @@ public class GameView extends View implements Callback, GameListener {
 	private Game game;
 	
 	private static int TileSize = 64;
+	private boolean graphicInit = false;
 	
 	Bitmap blackSquare;
 	Bitmap whiteSquare;
@@ -35,6 +36,12 @@ public class GameView extends View implements Callback, GameListener {
 	Bitmap[] whitePieces;
 	
 	private Paint paint = new Paint();
+
+	private int xOffset;
+
+	private int yOffset;
+
+	private int pieceOffset;
 	
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -43,14 +50,36 @@ public class GameView extends View implements Callback, GameListener {
 //		TileSize = (this.getHeight() -20) / 6;
 		Log.i("cburnham",Integer.toString(this.getHeight()));
 
+		
+	}
+	
+	@Override
+	 public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		Log.i("cburnham","onWindowFocusChanged called");
+		
+			initGraphics();
+
+	 }
+	
+	private void initGraphics() {
+		if (graphicInit) {
+			return;
+		}
+		int tileWidth = getWidth() / Board.cols;
+		int tileHeight = getHeight() / Board.rows;
+		TileSize = Math.min(tileWidth, tileHeight);
+		xOffset = (getWidth() - TileSize * Board.cols) / 2;
+		yOffset = (getHeight() - TileSize * Board.rows) / 2; 
 		//Load Images
-		Resources res = context.getResources();
+		Resources res = getContext().getResources();
 		blackSquare = loadImage(res.getDrawable(R.drawable.blacksquare), TileSize);
 		whiteSquare = loadImage(res.getDrawable(R.drawable.whitesquare), TileSize);
 		
 		blackPieces = new Bitmap[PieceType.values().length];
 		whitePieces = new Bitmap[PieceType.values().length];
-		int smallerSize = 48;
+		int smallerSize = TileSize * 3 /4 ;
+		pieceOffset = (TileSize - smallerSize) / 2;
 		
 		blackPieces[PieceType.Mate.ordinal()] = loadImage(res.getDrawable(R.drawable.blackmate), smallerSize);
 		blackPieces[PieceType.Shadow.ordinal()] = loadImage(res.getDrawable(R.drawable.blackshadow), smallerSize);
@@ -71,18 +100,17 @@ public class GameView extends View implements Callback, GameListener {
 		whitePieces[PieceType.Pawn1.ordinal()] = loadImage(res.getDrawable(R.drawable.whitepawn1), smallerSize);
 		whitePieces[PieceType.Pawn2.ordinal()] = loadImage(res.getDrawable(R.drawable.whitepawn2), smallerSize);
 		whitePieces[PieceType.Pawn3.ordinal()] = loadImage(res.getDrawable(R.drawable.whitepawn3), smallerSize);
+	  
+		graphicInit = true;
+		invalidate();
 	}
+
 	
 	public void setGame(Game g) {
 		game = g;
 		game.registerListener(this);
 	}
 	
-	public void initGame() {
-		game = new Game();
-		game.registerListener(this);
-		game.loadRandomStartingPositions(10);
-	}
 	
 	public Game saveGame() {
 		game.removeListener(this);
@@ -124,17 +152,20 @@ public class GameView extends View implements Callback, GameListener {
 	@SuppressLint("DrawAllocation")
 	@Override
 	protected void onDraw(Canvas canvas) {
-		Log.i("cburnham", "Drawing!");
 		super.onDraw(canvas);
+		Log.i("cburnham","Trying to Draw");
+		if (!graphicInit) {
+			return;
+		}
 		Board b = game.getBoard();
 		for (int row =0; row < Board.rows; row++) {
 			for (int col = 0; col < Board.cols; col++) {
 				Space s = b.getSpace(new Position(row, col));
 				if (s != null) {
 					if (s.getColor() == Color.BLACK) {
-						canvas.drawBitmap(blackSquare, col*TileSize, row * TileSize, paint);
+						canvas.drawBitmap(blackSquare, xOffset + col*TileSize, yOffset + row * TileSize, paint);
 					} else {
-						canvas.drawBitmap(whiteSquare, col*TileSize, row * TileSize, paint);
+						canvas.drawBitmap(whiteSquare, xOffset + col*TileSize, yOffset + row * TileSize, paint);
 					}
 					Piece p = s.getOccupyingPiece();
 					if (p != null) {
@@ -145,13 +176,16 @@ public class GameView extends View implements Callback, GameListener {
 						} else {
 							pieceToDraw = whitePieces[type.ordinal()];
 						}
-						canvas.drawBitmap(pieceToDraw, col*TileSize + TileSize / 8, row * TileSize + TileSize / 8, paint);
+						canvas.drawBitmap(pieceToDraw, xOffset + col*TileSize + pieceOffset, yOffset + row * TileSize + pieceOffset, paint);
 					}
 				}
 			}
 		}
 		canvas.drawText("Welcome to Maze", 10, 10, paint);
+		
 	}
+	
+	
 
 	@Override
 	public void gameHasChanged() {
