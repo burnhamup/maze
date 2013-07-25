@@ -113,7 +113,14 @@ public class Game implements Serializable {
 		result.add(new TimePawn(color,1));
 		result.add(new TimePawn(color,2));
 		result.add(new TimePawn(color,3));
-		result.addAll(result);
+		result.add(new Shadow(color));
+		result.add(new Lightning(color));
+		result.add(new Rabbit(color));
+		result.add(new Tree(color));
+		result.add(new Stone(color));
+		result.add(new TimePawn(color,1));
+		result.add(new TimePawn(color,2));
+		result.add(new TimePawn(color,3));
 		return result;
 		
 	}
@@ -131,7 +138,7 @@ public class Game implements Serializable {
 				currentTurn ==Color.WHITE && p.col < 5) {
 			Piece piece = board.getPiece(p);
 			if (piece != null) {
-				lastMovedPiece = p;
+				lastMovedPiece = p.clone();
 				validMoves = piece.getValidMoves(board);
 			}
 		}
@@ -180,6 +187,20 @@ public class Game implements Serializable {
 	
 	private void writeObject(java.io.ObjectOutputStream out) {
 		listeners = null;
+	}
+
+	/**
+	 * @return the currentTurn
+	 */
+	public Color getCurrentTurn() {
+		return currentTurn;
+	}
+
+	/**
+	 * @param currentTurn the currentTurn to set
+	 */
+	public void setCurrentTurn(Color currentTurn) {
+		this.currentTurn = currentTurn;
 	}
 	
 	
