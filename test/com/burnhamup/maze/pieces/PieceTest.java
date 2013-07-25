@@ -79,8 +79,10 @@ public class PieceTest {
 	@Test
 	public void testMovePiece() {
 		Piece p = new MockPiece(Color.WHITE);
-		p.movePiece(new Position(2, 2));
+		Position position = new Position(2,2);
+		p.movePiece(position);
 		assertEquals(new Position(2, 2), p.position);
+		assertNotSame(p.getPosition(), position);
 	}
 
 	@Test

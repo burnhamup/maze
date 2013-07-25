@@ -66,7 +66,7 @@ public abstract class Piece implements Serializable{
 	 * @param p
 	 */
 	public void movePiece(Position p) {
-		this.position = p;
+		this.position = p.clone();
 	}
 
 	public void kill() {
