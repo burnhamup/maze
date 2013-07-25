@@ -1,5 +1,8 @@
 package com.burnhamup.maze.android;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.burnhamup.maze.Board;
 import com.burnhamup.maze.Color;
 import com.burnhamup.maze.Game;
@@ -18,12 +21,11 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceHolder.Callback;
 import android.view.View;
 
-public class GameView extends View implements Callback, GameListener {
+public class GameView extends View implements GameListener {
 	private Game game;
 	
 	private static int TileSize = 64;
@@ -42,30 +44,33 @@ public class GameView extends View implements Callback, GameListener {
 	private int yOffset;
 
 	private int pieceOffset;
+
+	public Set<Position> highlightedPositions;
+
+	private GestureDetector mDetector;
+	private Position position;
+
+	private int pieceTileSize;
 	
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-//		getHolder().addCallback(this);
 		setFocusable(true);
-//		TileSize = (this.getHeight() -20) / 6;
-		Log.i("cburnham",Integer.toString(this.getHeight()));
-
-		
+		highlightedPositions = new HashSet<Position>();
+		mDetector = new GestureDetector(context, new TapListener());
+		position = new Position(0,0);
 	}
 	
 	@Override
-	 public void onWindowFocusChanged(boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
-		Log.i("cburnham","onWindowFocusChanged called");
+	 public void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+		Log.i("cburnham","onSizeChanged called");
 		
-			initGraphics();
+		initGraphics();
 
 	 }
 	
 	private void initGraphics() {
-		if (graphicInit) {
-			return;
-		}
+
 		int tileWidth = getWidth() / Board.cols;
 		int tileHeight = getHeight() / Board.rows;
 		TileSize = Math.min(tileWidth, tileHeight);
@@ -78,31 +83,30 @@ public class GameView extends View implements Callback, GameListener {
 		
 		blackPieces = new Bitmap[PieceType.values().length];
 		whitePieces = new Bitmap[PieceType.values().length];
-		int smallerSize = TileSize * 3 /4 ;
-		pieceOffset = (TileSize - smallerSize) / 2;
+		pieceTileSize = TileSize * 3 /4 ;
+		pieceOffset = (TileSize - pieceTileSize) / 2;
 		
-		blackPieces[PieceType.Mate.ordinal()] = loadImage(res.getDrawable(R.drawable.blackmate), smallerSize);
-		blackPieces[PieceType.Shadow.ordinal()] = loadImage(res.getDrawable(R.drawable.blackshadow), smallerSize);
-		blackPieces[PieceType.Lightning.ordinal()] = loadImage(res.getDrawable(R.drawable.blacklightning), smallerSize);
-		blackPieces[PieceType.Rabbit.ordinal()] = loadImage(res.getDrawable(R.drawable.blackrabbit), smallerSize);
-		blackPieces[PieceType.Tree.ordinal()] = loadImage(res.getDrawable(R.drawable.blacktree), smallerSize);
-		blackPieces[PieceType.Stone.ordinal()] = loadImage(res.getDrawable(R.drawable.blackstone), smallerSize);
-		blackPieces[PieceType.Pawn1.ordinal()] = loadImage(res.getDrawable(R.drawable.blackpawn1), smallerSize);
-		blackPieces[PieceType.Pawn2.ordinal()] = loadImage(res.getDrawable(R.drawable.blackpawn2), smallerSize);
-		blackPieces[PieceType.Pawn3.ordinal()] = loadImage(res.getDrawable(R.drawable.blackpawn3), smallerSize);
+		blackPieces[PieceType.Mate.ordinal()] = loadImage(res.getDrawable(R.drawable.blackmate), pieceTileSize);
+		blackPieces[PieceType.Shadow.ordinal()] = loadImage(res.getDrawable(R.drawable.blackshadow), pieceTileSize);
+		blackPieces[PieceType.Lightning.ordinal()] = loadImage(res.getDrawable(R.drawable.blacklightning), pieceTileSize);
+		blackPieces[PieceType.Rabbit.ordinal()] = loadImage(res.getDrawable(R.drawable.blackrabbit), pieceTileSize);
+		blackPieces[PieceType.Tree.ordinal()] = loadImage(res.getDrawable(R.drawable.blacktree), pieceTileSize);
+		blackPieces[PieceType.Stone.ordinal()] = loadImage(res.getDrawable(R.drawable.blackstone), pieceTileSize);
+		blackPieces[PieceType.Pawn1.ordinal()] = loadImage(res.getDrawable(R.drawable.blackpawn1), pieceTileSize);
+		blackPieces[PieceType.Pawn2.ordinal()] = loadImage(res.getDrawable(R.drawable.blackpawn2), pieceTileSize);
+		blackPieces[PieceType.Pawn3.ordinal()] = loadImage(res.getDrawable(R.drawable.blackpawn3), pieceTileSize);
 		
-		whitePieces[PieceType.Mate.ordinal()] = loadImage(res.getDrawable(R.drawable.whitemate), smallerSize);
-		whitePieces[PieceType.Shadow.ordinal()] = loadImage(res.getDrawable(R.drawable.whiteshadow), smallerSize);
-		whitePieces[PieceType.Lightning.ordinal()] = loadImage(res.getDrawable(R.drawable.whitelightning), smallerSize);
-		whitePieces[PieceType.Rabbit.ordinal()] = loadImage(res.getDrawable(R.drawable.whiterabbit), smallerSize);
-		whitePieces[PieceType.Tree.ordinal()] = loadImage(res.getDrawable(R.drawable.whitetree), smallerSize);
-		whitePieces[PieceType.Stone.ordinal()] = loadImage(res.getDrawable(R.drawable.whitestone), smallerSize);
-		whitePieces[PieceType.Pawn1.ordinal()] = loadImage(res.getDrawable(R.drawable.whitepawn1), smallerSize);
-		whitePieces[PieceType.Pawn2.ordinal()] = loadImage(res.getDrawable(R.drawable.whitepawn2), smallerSize);
-		whitePieces[PieceType.Pawn3.ordinal()] = loadImage(res.getDrawable(R.drawable.whitepawn3), smallerSize);
+		whitePieces[PieceType.Mate.ordinal()] = loadImage(res.getDrawable(R.drawable.whitemate), pieceTileSize);
+		whitePieces[PieceType.Shadow.ordinal()] = loadImage(res.getDrawable(R.drawable.whiteshadow), pieceTileSize);
+		whitePieces[PieceType.Lightning.ordinal()] = loadImage(res.getDrawable(R.drawable.whitelightning), pieceTileSize);
+		whitePieces[PieceType.Rabbit.ordinal()] = loadImage(res.getDrawable(R.drawable.whiterabbit), pieceTileSize);
+		whitePieces[PieceType.Tree.ordinal()] = loadImage(res.getDrawable(R.drawable.whitetree), pieceTileSize);
+		whitePieces[PieceType.Stone.ordinal()] = loadImage(res.getDrawable(R.drawable.whitestone), pieceTileSize);
+		whitePieces[PieceType.Pawn1.ordinal()] = loadImage(res.getDrawable(R.drawable.whitepawn1), pieceTileSize);
+		whitePieces[PieceType.Pawn2.ordinal()] = loadImage(res.getDrawable(R.drawable.whitepawn2), pieceTileSize);
+		whitePieces[PieceType.Pawn3.ordinal()] = loadImage(res.getDrawable(R.drawable.whitepawn3), pieceTileSize);
 	  
 		graphicInit = true;
-		invalidate();
 	}
 
 	
@@ -127,29 +131,37 @@ public class GameView extends View implements Callback, GameListener {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		return false;
-	}
-
-	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		
+		this.mDetector.onTouchEvent(event);
+		return super.onTouchEvent(event);
 	}
 	
-	@SuppressLint("DrawAllocation")
+	class TapListener extends GestureDetector.SimpleOnGestureListener {
+		
+		@Override
+		public boolean onDown(MotionEvent event) {
+			Log.d("cburnham",event.toString());
+			float x = event.getX();
+			float y = event.getY();
+			//Convert x and y to a position.
+			int col = (int) (x - xOffset) / TileSize;
+			int row = (int) (y - yOffset) / TileSize;
+			position.row = row;
+			position.col = col;
+			Log.d("cburnham","Position: " + position.toString());
+			//Either move or not.
+			if (highlightedPositions.contains(position)) {
+				game.movePiece(position);
+				highlightedPositions.clear();
+			} else {				
+				highlightedPositions = game.getValidMoves(position);
+			}
+			invalidate();
+			
+			
+			return true;
+		}
+	}
+	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -160,7 +172,9 @@ public class GameView extends View implements Callback, GameListener {
 		Board b = game.getBoard();
 		for (int row =0; row < Board.rows; row++) {
 			for (int col = 0; col < Board.cols; col++) {
-				Space s = b.getSpace(new Position(row, col));
+				position.row = row;
+				position.col = col;
+				Space s = b.getSpace(position);
 				if (s != null) {
 					if (s.getColor() == Color.BLACK) {
 						canvas.drawBitmap(blackSquare, xOffset + col*TileSize, yOffset + row * TileSize, paint);
@@ -177,11 +191,32 @@ public class GameView extends View implements Callback, GameListener {
 							pieceToDraw = whitePieces[type.ordinal()];
 						}
 						canvas.drawBitmap(pieceToDraw, xOffset + col*TileSize + pieceOffset, yOffset + row * TileSize + pieceOffset, paint);
+						if (p.isDead()) {
+							paint.setColor(android.graphics.Color.RED);
+							paint.setStrokeWidth(5);
+							canvas.drawLine(xOffset + col * TileSize + pieceOffset, 
+									yOffset+row * TileSize + pieceOffset, 
+									xOffset + col * TileSize + pieceOffset + pieceTileSize, 
+									yOffset+row * TileSize + pieceOffset + pieceTileSize,
+									paint);
+							canvas.drawLine(xOffset + col * TileSize + pieceOffset + pieceTileSize, 
+									yOffset+row * TileSize + pieceOffset, 
+									xOffset + col * TileSize + pieceOffset, 
+									yOffset+row * TileSize + pieceOffset + pieceTileSize,
+									paint);
+							paint.setStrokeWidth(0);
+							
+						}
 					}
 				}
 			}
 		}
-		canvas.drawText("Welcome to Maze", 10, 10, paint);
+		for (Position p : highlightedPositions) {
+			paint.setColor(android.graphics.Color.RED);
+			canvas.drawRect(xOffset+p.col*TileSize,  yOffset+p.row*TileSize, xOffset+p.col*TileSize + TileSize, yOffset+p.row*TileSize + TileSize, paint);
+		}
+		paint.setColor(android.graphics.Color.BLACK);
+		canvas.drawText("Current Turn: " + game.getCurrentTurn(), 10, 10, paint);
 		
 	}
 	
