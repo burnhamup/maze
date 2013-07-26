@@ -17,7 +17,7 @@ public class BoardTest {
 	public void testBoardCreation() {
 		Board board = new Board();
 		
-		Set<Integer> blankspot = new TreeSet<>(Arrays.asList(0,1,8,9,10,19,40,49,50,51,58,59));
+		Set<Integer> blankspot = new TreeSet<Integer>(Arrays.asList(0,1,8,9,10,19,40,49,50,51,58,59));
 		int current = -1;
 		for (int row = 0; row<Board.rows;row++) {
 			for (int col = 0; col<Board.cols;col++) {
