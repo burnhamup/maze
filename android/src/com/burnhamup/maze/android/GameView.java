@@ -12,7 +12,6 @@ import com.burnhamup.maze.Space;
 import com.burnhamup.maze.pieces.Piece;
 import com.burnhamup.maze.pieces.Piece.PieceType;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
