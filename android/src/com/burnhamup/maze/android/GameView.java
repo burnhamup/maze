@@ -114,6 +114,9 @@ public class GameView extends View implements GameListener {
 		game.registerListener(this);
 	}
 	
+    public Game getGame() {
+        return game;
+    }
 	
 	public Game saveGame() {
 		game.removeListener(this);

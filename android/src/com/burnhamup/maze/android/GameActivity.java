@@ -43,6 +43,9 @@ public class GameActivity extends Activity {
 		Bundle save = new Bundle();
 		save.putSerializable("game", gameView.saveGame());
 		outState.putBundle("maze-game", save);
-	}
+  	}
 
+    public void onBackPressed() {
+        gameView.getGame().undoMove();
+    }
 }

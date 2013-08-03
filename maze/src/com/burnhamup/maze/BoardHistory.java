@@ -19,4 +19,8 @@ public class BoardHistory {
         return history.remove((history.size()-1));
     }
 
+    public int count() {
+        return history.size();
+    }
+
 }

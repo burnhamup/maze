@@ -21,27 +21,28 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int blacklightning=0x7f020000;
-        public static final int blackmate=0x7f020001;
-        public static final int blackpawn1=0x7f020002;
-        public static final int blackpawn2=0x7f020003;
-        public static final int blackpawn3=0x7f020004;
-        public static final int blackrabbit=0x7f020005;
-        public static final int blackshadow=0x7f020006;
-        public static final int blacksquare=0x7f020007;
-        public static final int blackstone=0x7f020008;
-        public static final int blacktree=0x7f020009;
-        public static final int ic_launcher=0x7f02000a;
-        public static final int whitelightning=0x7f02000b;
-        public static final int whitemate=0x7f02000c;
-        public static final int whitepawn1=0x7f02000d;
-        public static final int whitepawn2=0x7f02000e;
-        public static final int whitepawn3=0x7f02000f;
-        public static final int whiterabbit=0x7f020010;
-        public static final int whiteshadow=0x7f020011;
-        public static final int whitesquare=0x7f020012;
-        public static final int whitestone=0x7f020013;
-        public static final int whitetree=0x7f020014;
+        public static final int back=0x7f020000;
+        public static final int blacklightning=0x7f020001;
+        public static final int blackmate=0x7f020002;
+        public static final int blackpawn1=0x7f020003;
+        public static final int blackpawn2=0x7f020004;
+        public static final int blackpawn3=0x7f020005;
+        public static final int blackrabbit=0x7f020006;
+        public static final int blackshadow=0x7f020007;
+        public static final int blacksquare=0x7f020008;
+        public static final int blackstone=0x7f020009;
+        public static final int blacktree=0x7f02000a;
+        public static final int ic_launcher=0x7f02000b;
+        public static final int whitelightning=0x7f02000c;
+        public static final int whitemate=0x7f02000d;
+        public static final int whitepawn1=0x7f02000e;
+        public static final int whitepawn2=0x7f02000f;
+        public static final int whitepawn3=0x7f020010;
+        public static final int whiterabbit=0x7f020011;
+        public static final int whiteshadow=0x7f020012;
+        public static final int whitesquare=0x7f020013;
+        public static final int whitestone=0x7f020014;
+        public static final int whitetree=0x7f020015;
     }
     public static final class id {
         public static final int action_settings=0x7f080001;

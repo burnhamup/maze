@@ -159,10 +159,19 @@ public class Board {
     /**
      * Undoes the last move made on this board.
      */
-    public void undoMove() {
+    public boolean undoMove() {
+       if (history.count() == 0) {
+            return false;
+       }
        Move m = history.popMove();
-       movePiece(m.end, m.start);
-       getPiece(m.start).unkill();
+       Piece move = getPiece(m.end);
+
+       getSpace(m.end).setOccupyingPiece(null);
+       getSpace(m.start).setOccupyingPiece(move);
+       move.movePiece(m.start);
+        
+       move.unkill();
+       return true;
     }
 	
 	/**

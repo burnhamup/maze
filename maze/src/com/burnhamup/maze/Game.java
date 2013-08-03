@@ -165,6 +165,17 @@ public class Game implements Serializable {
 		notifyGameHasChanged();
 	}
 
+    public void undoMove() {
+        if (board.undoMove()) {
+            if (currentTurn == Color.WHITE) {
+                 currentTurn = Color.BLACK;
+            } else {
+                currentTurn = Color.WHITE;
+            }
+        notifyGameHasChanged();
+        }
+    }
+
 	public Board getBoard() {
 		return board;
 	}
