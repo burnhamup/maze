@@ -30,6 +30,7 @@ public class Board {
 	public static final int cols = 10;
 	protected Set<Mate> blackMates;
 	protected Set<Mate> whiteMates;
+    private BoardHistory history;
 	
 	private boolean drubenVariation = false; //Whether or not the time pawns can move less than the number of their spaces
 	
@@ -37,6 +38,7 @@ public class Board {
 		blackMates = new HashSet<Mate>();
 		whiteMates = new HashSet<Mate>();
 		board = new Space[rows][cols];
+        history = new BoardHistory();
 		Color color = null;
 		for (int row =0; row<rows;row++) {
 			for (int col=0; col<cols;col++) {
@@ -148,16 +150,27 @@ public class Board {
 		if (getSpace(newPosition).isDesert()) {
 			movingPiece.kill();
 		}
+        Move m = new Move(current, newPosition);
+        history.pushMove(m);
 		notifySpaceHasChanged(current);
-		notifySpaceHasChanged(newPosition);
-		
+		notifySpaceHasChanged(newPosition);	
 	}
+
+    /**
+     * Undoes the last move made on this board.
+     */
+    public void undoMove() {
+       Move m = history.popMove();
+       movePiece(m.end, m.start);
+       getPiece(m.start).unkill();
+    }
 	
 	/**
 	 * 
 	 * @param pos
 	 * @return
-	 */
+	 
+     */
 	public Piece getPiece(Position pos) {
 		if (isValidPosition(pos)) {
 			return getSpace(pos).getOccupyingPiece();

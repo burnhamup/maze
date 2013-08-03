@@ -219,6 +219,18 @@ public class BoardTest {
 		
 		assertTrue(board.isGameWon());
 	}
-	
+
+    @Test
+    public void testUndoMove() {
+	    Board board = new Board();
+        Piece mate = new Mate(Color.WHITE);
+        board.addPiece(mate, new Position(2,0));
+        board.movePiece(new Position(2,0), new Position(5,3));
+        assertTrue(mate.getPosition().equals(new Position(5,3)));
+        assertTrue(mate.isDead());
+        board.undoMove();
+        assertTrue(mate.getPosition().equals(new Position(2,0)));  
+        assertFalse(mate.isDead());
+    }
 
 }

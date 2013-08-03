@@ -73,6 +73,10 @@ public abstract class Piece implements Serializable{
 		isDead = true;
 	}
 
+    public void unkill() {
+        isDead = false;
+    }
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
