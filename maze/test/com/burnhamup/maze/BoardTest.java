@@ -228,9 +228,18 @@ public class BoardTest {
         board.movePiece(new Position(2,0), new Position(5,3));
         assertTrue(mate.getPosition().equals(new Position(5,3)));
         assertTrue(mate.isDead());
-        board.undoMove();
+        assertTrue(board.undoMove());
         assertTrue(mate.getPosition().equals(new Position(2,0)));  
         assertFalse(mate.isDead());
+        assertFalse(board.undoMove());
+    }
+    
+    @Test
+    public void testUndoMoveWithNoHistory() {
+    	Board board = new Board();
+    	Piece mate = new Mate(Color.WHITE);
+    	board.addPiece(mate, new Position(2,0));
+    	assertFalse(board.undoMove());
     }
 
 }

@@ -28,6 +28,10 @@ public class Game implements Serializable {
 	protected Position lastMovedPiece;
 
 	
+	/**
+	 * Creates a new game with mates in their starting positions,
+	 * with white having the first move.
+	 */
 	public Game() {
 		currentTurn = Color.WHITE;
 		board = new Board();
