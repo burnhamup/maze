@@ -1,10 +1,14 @@
-<project>
+<project xmlns:jacoco="antlib:org.jacoco.ant">
   <property name="src_dir" location="src" />
   <property name="test_dir" location="test" />
   <property name="build_dir" location="build" />
   <property name="src_build" location="build/class" />
   <property name="test_build" location="build/test-class" />
   <property name="junit" location="/usr/share/java/junit4.jar" />
+
+  <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+      <classpath path="/usr/share/ant/lib/jacocoant.jar" />
+  </taskdef>
 
   <target name="clean">
     <delete dir="${build_dir}" />
@@ -26,7 +30,8 @@
   </target>
     
   <target name="test" depends="build-test">
-    <junit haltonfailure="true">
+      <jacoco:coverage>
+      <junit haltonfailure="true" fork="yes" forkmode="once">
       <formatter type="brief" usefile="false" />
       <formatter type="plain" />
       <classpath>
@@ -34,10 +39,30 @@
 	<pathelement location="${src_build}"/>
 	<pathelement location="${junit}" />
       </classpath>
-      <batchtest fork="no" todir="report">
+      <batchtest fork="yes" todir="report">
 	<fileset dir="${test_dir}" includes="**/*Test.java"/>
       </batchtest>
-    </junit>
-  </target>
+  </junit>
+    </jacoco:coverage>
+</target>
+
+<jacoco:report>
+                        
+    <executiondata>
+        <file file="jacoco.exec"/>
+    </executiondata>
+                        
+    <structure name="Maze">
+        <classfiles>
+            <fileset dir="${src_build}"/>
+        </classfiles>
+        <sourcefiles encoding="UTF-8">
+            <fileset dir="src"/>
+        </sourcefiles>
+    </structure>
+                        
+    <html destdir="report"/>
+                        
+</jacoco:report>
   
 </project>

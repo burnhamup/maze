@@ -80,7 +80,6 @@ public class TimePawnTest {
 		TimePawn pawn = new TimePawn(Color.BLACK, 3);
 		b.addPiece(pawn, new Position(3,5));
 		Set<Position> moveSet = pawn.getValidMoves(b);
-		System.out.println(moveSet);
 		assertEquals(8,moveSet.size());
 		assertTrue(moveSet.contains(new Position(3,4)));
 		assertTrue(moveSet.contains(new Position(3,3)));
